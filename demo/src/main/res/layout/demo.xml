@@ -1,0 +1,81 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".DemoActivity"
+    >
+
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/ripple_layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffff00"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        app:rippleOverlay="true"
+        app:rippleColor="#0000ff"
+        app:rippleAlpha="0.4"
+        app:rippleHover="true">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="55dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"
+            android:text="Overlay with hover"/>
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/ripple_layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        android:background="#8ada00"
+        app:rippleOverlay="true"
+        app:rippleColor="#ff0000"
+        app:rippleDimension="35dp"
+        app:rippleAlpha="0.7"
+        app:rippleHover="false">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="55dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"
+            android:text="Ripples overlay"/>
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/ripple_layout_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        app:rippleBackground="#ff0000"
+        app:rippleOverlay="false"
+        app:rippleColor="#000000"
+        app:rippleHover="false">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="55dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"
+            android:text="Ripples under"/>
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+
+</LinearLayout>

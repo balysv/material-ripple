@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MaterialRippleLayout">
+        <attr name="rippleColor" format="color"/>
+        <attr name="rippleDimension" format="dimension"/>
+        <attr name="rippleOverlay" format="boolean"/>
+        <attr name="rippleAlpha" format="float"/>
+        <attr name="rippleDuration" format="integer"/>
+        <attr name="rippleHover" format="boolean"/>
+        <attr name="rippleBackground" format="color"/>
+    </declare-styleable>
+</resources>
