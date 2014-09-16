@@ -3,6 +3,8 @@ Material Ripple Layout
 
 Ripple effect wrapper for Android Views
 
+![Demo Image][1]
+
 Usage
 -----
 
@@ -50,3 +52,5 @@ Access your child `View` if necessary:
 ```java
 MyCustomView view = MaterialRippleLayout.getChildView();
 ```
+
+[1]: https://raw.github.com/balysv/material-ripple/master/art/demo.gif
