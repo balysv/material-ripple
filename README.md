@@ -5,6 +5,22 @@ Ripple effect wrapper for Android Views
 
 ![Demo Image][1]
 
+Including in your project
+-------------------------
+
+Add Sonatype Maven repository and import dependencies
+
+```groovy
+repositories {
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
+
+compile 'com.balysv:material-ripple:1.0.0-SNAPSHOT@aar'
+compile 'com.nineoldandroids:library:2.4.0'
+```
+
 Usage
 -----
 
