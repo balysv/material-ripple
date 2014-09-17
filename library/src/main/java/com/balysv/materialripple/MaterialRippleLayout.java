@@ -145,7 +145,9 @@ public class MaterialRippleLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        super.onTouchEvent(event);
+        boolean superOnTouchEvent = super.onTouchEvent(event);
+
+        if (!isEnabled() || !childView.isEnabled()) return superOnTouchEvent;
 
         eventX = event.getX();
         eventY = event.getY();
