@@ -17,7 +17,7 @@ repositories {
     }
 }
 
-compile 'com.balysv:material-ripple:1.0.0-SNAPSHOT@aar'
+compile 'com.balysv:material-ripple:1.0.1-SNAPSHOT@aar'
 compile 'com.nineoldandroids:library:2.4.0'
 ```
 
