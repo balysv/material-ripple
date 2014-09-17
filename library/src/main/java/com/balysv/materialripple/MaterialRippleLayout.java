@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2014 Balys Valentukevicius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.balysv.materialripple;
 
 import android.content.Context;
@@ -30,7 +46,7 @@ import static android.view.GestureDetector.SimpleOnGestureListener;
 public class MaterialRippleLayout extends FrameLayout {
 
     private static final int     DEFAULT_DURATION    = 500;
-    private static final float   DEFAULT_DIAMETER_DP = 30;
+    private static final float   DEFAULT_DIAMETER_DP = 35;
     private static final float   DEFAULT_ALPHA       = 0.7f;
     private static final int     DEFAULT_COLOR       = Color.BLACK;
     private static final int     DEFAULT_BACKGROUND  = Color.WHITE;
@@ -55,14 +71,14 @@ public class MaterialRippleLayout extends FrameLayout {
 
     private float radius;
 
-    private View            childView;
-    private OnClickListener childClickListener;
+    private View childView;
 
     private AnimatorSet    rippleAnimator;
     private ObjectAnimator hoverAnimator;
 
-    private float eventX;
-    private float eventY;
+    private float   eventX;
+    private float   eventY;
+    private boolean eventCancelled;
 
     private GestureDetector gestureDetector;
 
@@ -119,55 +135,84 @@ public class MaterialRippleLayout extends FrameLayout {
         if (childView == null) {
             throw new IllegalStateException("MaterialRippleLayout must have a child view to handle clicks");
         }
-        childView.setClickable(false);
-        this.childClickListener = onClickListener;
+        childView.setOnClickListener(onClickListener);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        return true;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        super.onTouchEvent(event);
+
         eventX = event.getX();
         eventY = event.getY();
 
-        boolean actionUpDetected = event.getActionMasked() == MotionEvent.ACTION_UP;
-        boolean actionCancelDetected = event.getActionMasked() == MotionEvent.ACTION_CANCEL;
-        boolean actionDownDetected = event.getActionMasked() == MotionEvent.ACTION_DOWN;
-        boolean actionMoveDetected = event.getActionMasked() == MotionEvent.ACTION_MOVE;
         boolean isEventInBounds = bounds.contains((int) eventX, (int) eventY);
 
         if (gestureDetector.onTouchEvent(event)) {
+            childView.onTouchEvent(event);
             startRipple();
-        } else if (actionUpDetected) {
-            if (isEventInBounds) {
-                startRipple();
-            } else {
-                setRadius(0);
-            }
-        } else if (actionCancelDetected) {
-            setRadius(0);
-        } else if (rippleHover) {
-            if (actionDownDetected) {
-                startHover();
-            } else if (actionMoveDetected) {
-                setRadius(isEventInBounds ? rippleDiameter : 0);
+        } else {
+            int action = event.getActionMasked();
+            switch (action) {
+                case MotionEvent.ACTION_UP:
+                    if (isEventInBounds) {
+                        startRipple();
+                    } else {
+                        setRadius(0);
+                    }
+                    childView.onTouchEvent(event);
+                    break;
+                case MotionEvent.ACTION_DOWN:
+                    eventCancelled = false;
+                    if (rippleHover) {
+                        startHover();
+                    }
+                    childView.onTouchEvent(event);
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    if (hoverAnimator != null) {
+                        hoverAnimator.cancel();
+                    }
+                    setRadius(0);
+                    childView.onTouchEvent(event);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    if (rippleHover) {
+                        if (isEventInBounds && !eventCancelled) {
+                            setRadius(rippleDiameter);
+                        } else {
+                            setRadius(0);
+                        }
+                    }
+
+                    if (!isEventInBounds) {
+                        childView.onTouchEvent(event);
+                        eventCancelled = true;
+                    }
+                    break;
             }
         }
         return true;
     }
 
     private void startHover() {
+        if (eventCancelled) return;
+
         if (hoverAnimator != null) {
             hoverAnimator.cancel();
         }
         hoverAnimator = ObjectAnimator.ofFloat(this, radiusProperty, 0, rippleDiameter)
             .setDuration(HOVER_DURATION);
-        hoverAnimator.setInterpolator(new AccelerateInterpolator());
+        hoverAnimator.setInterpolator(new DecelerateInterpolator(3));
         hoverAnimator.start();
     }
 
     private void startRipple() {
-        if (childView != null && childClickListener != null) {
-            childClickListener.onClick(childView);
-        }
+        if (eventCancelled) return;
 
         final int width = getWidth();
         final int height = getHeight();

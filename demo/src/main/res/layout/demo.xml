@@ -14,7 +14,6 @@
     >
 
     <com.balysv.materialripple.MaterialRippleLayout
-        android:id="@+id/ripple_layout_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffff00"
@@ -26,9 +25,9 @@
         app:rippleHover="true">
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="55dp"
-            android:background="@android:color/white"
+            android:id="@+id/ripple_layout_1"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Overlay with hover"/>
 
@@ -36,7 +35,6 @@
 
 
     <com.balysv.materialripple.MaterialRippleLayout
-        android:id="@+id/ripple_layout_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -49,16 +47,15 @@
         app:rippleHover="false">
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="55dp"
-            android:background="@android:color/white"
+            android:id="@+id/ripple_layout_2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Ripples overlay"/>
 
     </com.balysv.materialripple.MaterialRippleLayout>
 
     <com.balysv.materialripple.MaterialRippleLayout
-        android:id="@+id/ripple_layout_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -69,13 +66,12 @@
         app:rippleHover="false">
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="55dp"
-            android:background="@android:color/white"
+            android:id="@+id/ripple_layout_3"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Ripples under"/>
 
     </com.balysv.materialripple.MaterialRippleLayout>
-
 
 </LinearLayout>
