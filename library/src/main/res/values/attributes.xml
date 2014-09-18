@@ -6,7 +6,9 @@
         <attr name="rippleOverlay" format="boolean"/>
         <attr name="rippleAlpha" format="float"/>
         <attr name="rippleDuration" format="integer"/>
+        <attr name="rippleFadeDuration" format="integer"/>
         <attr name="rippleHover" format="boolean"/>
         <attr name="rippleBackground" format="color"/>
+        <attr name="rippleDelayClick" format="boolean"/>
     </declare-styleable>
 </resources>
