@@ -17,7 +17,7 @@ repositories {
     }
 }
 
-compile 'com.balysv:material-ripple:1.0.1-SNAPSHOT@aar'
+compile 'com.balysv:material-ripple:1.0.2-SNAPSHOT@aar'
 compile 'com.nineoldandroids:library:2.4.0'
 ```
 
@@ -50,8 +50,11 @@ app:rippleAlpha="0.7"          // alpha of ripple
 app:rippleDimension="35dp"     // radius of hover and starting ripple
 app:rippleHover="false"        // if true, a hover effect is drawn when view is touched
 app:rippleDuration="400"       // duration of ripple animation
+app:rippleFadeDuration="50"    // duration of fade out effect on ripple
 app:rippleBackground="#FFFFFF" // background under ripple drawable; used with rippleOverlay="false"
-```
+app:rippleDelayClick="true"    // if true, delays calls to OnClickListeners until ripple effect ends
+app:ripplePersistent="true"    // if true, ripple background color persists after animation, until setRadius(0) is called
+```Up
 
 Set an `OnClickListener` to `MaterialRippleLayout`:
 
@@ -62,6 +65,8 @@ findViewById(R.id.ripple).setOnClickListener(new View.OnClickListener() {
     }
 });
 ```
+
+Or if using in an `AdapterView`, simply use `OnItemClickListener`
 
 Access your child `View` if necessary:
 
