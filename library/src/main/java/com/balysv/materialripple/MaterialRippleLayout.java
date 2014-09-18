@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 
 import com.nineoldandroids.animation.Animator;
@@ -45,7 +46,7 @@ import static android.view.GestureDetector.SimpleOnGestureListener;
 
 public class MaterialRippleLayout extends FrameLayout {
 
-    private static final int     DEFAULT_DURATION    = 500;
+    private static final int     DEFAULT_DURATION    = 300;
     private static final float   DEFAULT_DIAMETER_DP = 35;
     private static final float   DEFAULT_ALPHA       = 0.7f;
     private static final int     DEFAULT_COLOR       = Color.BLACK;
@@ -54,9 +55,9 @@ public class MaterialRippleLayout extends FrameLayout {
 
     private static final boolean DEFAULT_RIPPLE_OVERLAY = true;
 
-    private static final long FADE_DURATION    = 200;
+    private static final long FADE_DURATION    = 100;
     private static final int  FADE_EXTRA_DELAY = 25;
-    private static final long HOVER_DURATION   = 200;
+    private static final long HOVER_DURATION   = 150;
 
     private final Paint paint  = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Rect  bounds = new Rect();
@@ -155,7 +156,7 @@ public class MaterialRippleLayout extends FrameLayout {
         boolean isEventInBounds = bounds.contains((int) eventX, (int) eventY);
 
         if (gestureDetector.onTouchEvent(event)) {
-            childView.onTouchEvent(event);
+            performClickEvent(event);
             startRipple();
         } else {
             int action = event.getActionMasked();
@@ -166,7 +167,7 @@ public class MaterialRippleLayout extends FrameLayout {
                     } else {
                         setRadius(0);
                     }
-                    childView.onTouchEvent(event);
+                    performClickEvent(event);
                     break;
                 case MotionEvent.ACTION_DOWN:
                     eventCancelled = false;
@@ -199,6 +200,23 @@ public class MaterialRippleLayout extends FrameLayout {
             }
         }
         return true;
+    }
+
+    private void performClickEvent(MotionEvent event) {
+        // if parent is an AdapterView, try to call its ItemClickListener
+        if (getParent() instanceof AdapterView) {
+            AdapterView parent = (AdapterView) getParent();
+            final int position = parent.getPositionForView(this);
+            final long itemId = parent.getAdapter() != null
+                ? parent.getAdapter().getItemId(position)
+                : 0;
+            if (position != AdapterView.INVALID_POSITION) {
+                parent.performItemClick(this, position, itemId);
+            }
+        } else {
+            // otherwise, just passs event to child view
+            childView.onTouchEvent(event);
+        }
     }
 
     private void startHover() {
