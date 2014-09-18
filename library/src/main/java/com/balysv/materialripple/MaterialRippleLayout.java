@@ -51,8 +51,10 @@ public class MaterialRippleLayout extends FrameLayout {
     private static final float   DEFAULT_DIAMETER_DP   = 35;
     private static final float   DEFAULT_ALPHA         = 0.7f;
     private static final int     DEFAULT_COLOR         = Color.BLACK;
-    private static final int     DEFAULT_BACKGROUND    = Color.WHITE;
+    private static final int     DEFAULT_BACKGROUND    = Color.TRANSPARENT;
     private static final boolean DEFAULT_HOVER         = true;
+    private static final boolean DEFAULT_DELAY_CLICK   = true;
+    private static final boolean DEFAULT_PERSISTENT    = false;
 
     private static final boolean DEFAULT_RIPPLE_OVERLAY = true;
 
@@ -70,6 +72,7 @@ public class MaterialRippleLayout extends FrameLayout {
     private int      rippleAlpha;
     private boolean  rippleDelayClick;
     private int      rippleFadeDuration;
+    private boolean  ripplePersistent;
     private Drawable rippleBackground;
 
     private float radius;
@@ -109,9 +112,10 @@ public class MaterialRippleLayout extends FrameLayout {
         rippleHover = a.getBoolean(R.styleable.MaterialRippleLayout_rippleHover, DEFAULT_HOVER);
         rippleDuration = a.getInt(R.styleable.MaterialRippleLayout_rippleDuration, DEFAULT_DURATION);
         rippleAlpha = (int) (255 * a.getFloat(R.styleable.MaterialRippleLayout_rippleAlpha, DEFAULT_ALPHA));
-        rippleDelayClick = a.getBoolean(R.styleable.MaterialRippleLayout_rippleDelayClick, true);
+        rippleDelayClick = a.getBoolean(R.styleable.MaterialRippleLayout_rippleDelayClick, DEFAULT_DELAY_CLICK);
         rippleFadeDuration = a.getInteger(R.styleable.MaterialRippleLayout_rippleFadeDuration, DEFAULT_FADE_DURATION);
         rippleBackground = new ColorDrawable(a.getColor(R.styleable.MaterialRippleLayout_rippleBackground, DEFAULT_BACKGROUND));
+        ripplePersistent = a.getBoolean(R.styleable.MaterialRippleLayout_ripplePersistent, DEFAULT_PERSISTENT);
 
         a.recycle();
 
@@ -249,8 +253,10 @@ public class MaterialRippleLayout extends FrameLayout {
         rippleAnimator = new AnimatorSet();
         rippleAnimator.addListener(new AnimatorListenerAdapter() {
             @Override public void onAnimationEnd(Animator animation) {
-                setRadius(0);
-                setRippleAlpha(rippleAlpha);
+                if (!ripplePersistent) {
+                    setRadius(0);
+                    setRippleAlpha(rippleAlpha);
+                }
                 if (animationEndRunnable != null) {
                     animationEndRunnable.run();
                 }
@@ -265,7 +271,11 @@ public class MaterialRippleLayout extends FrameLayout {
         fade.setInterpolator(new AccelerateInterpolator());
         fade.setStartDelay(rippleDuration - rippleFadeDuration - FADE_EXTRA_DELAY);
 
-        rippleAnimator.playTogether(ripple, fade);
+        if (ripplePersistent) {
+            rippleAnimator.play(ripple);
+        } else {
+            rippleAnimator.playTogether(ripple, fade);
+        }
         rippleAnimator.start();
     }
 
@@ -373,6 +383,10 @@ public class MaterialRippleLayout extends FrameLayout {
 
     public void setRippleFadeDuration(int rippleFadeDuration) {
         this.rippleFadeDuration = rippleFadeDuration;
+    }
+
+    public void setRipplePersistent(boolean ripplePersistent) {
+        this.ripplePersistent = ripplePersistent;
     }
 
     /*

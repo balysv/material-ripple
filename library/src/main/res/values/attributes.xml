@@ -10,5 +10,6 @@
         <attr name="rippleHover" format="boolean"/>
         <attr name="rippleBackground" format="color"/>
         <attr name="rippleDelayClick" format="boolean"/>
+        <attr name="ripplePersistent" format="boolean"/>
     </declare-styleable>
 </resources>
