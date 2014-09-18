@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.balysv.materialripple.MaterialRippleLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    app:rippleOverlay="false"
+    app:rippleColor="#ffff00"
+    app:rippleDimension="35dp"
+    app:rippleAlpha="0.95"
+    app:rippleHover="false">
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:textSize="20sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:paddingRight="8dp"
+        />
+
+</com.balysv.materialripple.MaterialRippleLayout>

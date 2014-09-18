@@ -1,7 +1,10 @@
 package com.balysv.materialripple.demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 
@@ -17,5 +20,22 @@ public class DemoActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override public void onClick(View v) {
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.switch_list) {
+            startActivity(new Intent(this, DemoListActivity.class));
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
