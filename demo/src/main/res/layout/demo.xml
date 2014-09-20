@@ -34,26 +34,15 @@
     </com.balysv.materialripple.MaterialRippleLayout>
 
 
-    <com.balysv.materialripple.MaterialRippleLayout
+    <Button
+        android:id="@+id/ripple_layout_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:padding="8dp"
-        android:background="#8ada00"
-        app:rippleOverlay="true"
-        app:rippleColor="#ff0000"
-        app:rippleDimension="35dp"
-        app:rippleAlpha="0.7"
-        app:rippleHover="false">
+        android:layout_gravity="center"
+        android:background="#00FF00"
+        android:text="Ripples overlay"/>
 
-        <Button
-            android:id="@+id/ripple_layout_2"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Ripples overlay"/>
-
-    </com.balysv.materialripple.MaterialRippleLayout>
 
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
@@ -62,7 +51,9 @@
         android:padding="8dp"
         app:rippleBackground="#ff0000"
         app:rippleOverlay="false"
-        app:rippleColor="#000000"
+        app:rippleColor="#f5f5f5"
+        app:rippleDimension="35dp"
+        app:rippleAlpha="0.7"
         app:rippleHover="false">
 
         <Button
@@ -70,8 +61,9 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Ripples under"/>
+            android:text="Ripples Under"/>
 
     </com.balysv.materialripple.MaterialRippleLayout>
+
 
 </LinearLayout>

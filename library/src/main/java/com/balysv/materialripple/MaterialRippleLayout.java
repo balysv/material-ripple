@@ -43,6 +43,7 @@ import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.util.Property;
 
 import static android.view.GestureDetector.SimpleOnGestureListener;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class MaterialRippleLayout extends FrameLayout {
 
@@ -87,6 +88,10 @@ public class MaterialRippleLayout extends FrameLayout {
     private boolean eventCancelled;
 
     private GestureDetector gestureDetector;
+
+    public static RippleBuilder on(View view) {
+        return new RippleBuilder(view);
+    }
 
     public MaterialRippleLayout(Context context) {
         this(context, null, 0);
@@ -355,6 +360,7 @@ public class MaterialRippleLayout extends FrameLayout {
      */
     public void setRippleColor(int rippleColor) {
         this.rippleColor = rippleColor;
+        paint.setColor(rippleColor);
     }
 
     public void setRippleOverlay(boolean rippleOverlay) {
@@ -387,6 +393,11 @@ public class MaterialRippleLayout extends FrameLayout {
 
     public void setRipplePersistent(boolean ripplePersistent) {
         this.ripplePersistent = ripplePersistent;
+    }
+
+    public void setDefaultRippleAlpha(int alpha) {
+        this.rippleAlpha = alpha;
+        paint.setAlpha(alpha);
     }
 
     /*
@@ -435,5 +446,112 @@ public class MaterialRippleLayout extends FrameLayout {
 
     static float dpToPx(Resources resources, float dp) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
+    }
+
+    /*
+     * Builder
+     */
+
+    public static class RippleBuilder {
+
+        private final Context context;
+        private final View    child;
+
+        private int     rippleColor        = DEFAULT_COLOR;
+        private boolean rippleOverlay      = DEFAULT_RIPPLE_OVERLAY;
+        private boolean rippleHover        = DEFAULT_HOVER;
+        private float   rippleDiameter     = DEFAULT_DIAMETER_DP;
+        private int     rippleDuration     = DEFAULT_DURATION;
+        private float   rippleAlpha        = DEFAULT_ALPHA;
+        private boolean rippleDelayClick   = DEFAULT_DELAY_CLICK;
+        private int     rippleFadeDuration = DEFAULT_FADE_DURATION;
+        private boolean ripplePersistent   = DEFAULT_PERSISTENT;
+        private int     rippleBackground   = DEFAULT_BACKGROUND;
+
+        public RippleBuilder(View child) {
+            this.child = child;
+            this.context = child.getContext();
+        }
+
+        public RippleBuilder rippleColor(int color) {
+            this.rippleColor = color;
+            return this;
+        }
+
+        public RippleBuilder rippleOverlay(boolean overlay) {
+            this.rippleOverlay = overlay;
+            return this;
+        }
+
+        public RippleBuilder rippleHover(boolean hover) {
+            this.rippleHover = hover;
+            return this;
+        }
+
+        public RippleBuilder rippleDiameterDp(int diameterDp) {
+            this.rippleDiameter = diameterDp;
+            return this;
+        }
+
+        public RippleBuilder rippleDuration(int duration) {
+            this.rippleDuration = duration;
+            return this;
+        }
+
+        public RippleBuilder rippleAlpha(float alpha) {
+            this.rippleAlpha = 255 * alpha;
+            return this;
+        }
+
+        public RippleBuilder rippleDelayClick(boolean delayClick) {
+            this.rippleDelayClick = delayClick;
+            return this;
+        }
+
+        public RippleBuilder rippleFadeDuration(int fadeDuration) {
+            this.rippleFadeDuration = fadeDuration;
+            return this;
+        }
+
+        public RippleBuilder ripplePersistent(boolean persistent) {
+            this.ripplePersistent = persistent;
+            return this;
+        }
+
+        public RippleBuilder rippleBackground(int color) {
+            this.rippleBackground = color;
+            return this;
+        }
+
+        public MaterialRippleLayout create() {
+            MaterialRippleLayout layout = new MaterialRippleLayout(context);
+            layout.setRippleColor(rippleColor);
+            layout.setRippleAlpha((int) (255 * rippleAlpha));
+            layout.setRippleDelayClick(rippleDelayClick);
+            layout.setRippleDiameter((int) dpToPx(context.getResources(), rippleDiameter));
+            layout.setRippleDuration(rippleDuration);
+            layout.setRippleFadeDuration(rippleFadeDuration);
+            layout.setRippleHover(rippleHover);
+            layout.setRipplePersistent(ripplePersistent);
+            layout.setRippleOverlay(rippleOverlay);
+            layout.setRippleBackground(rippleBackground);
+
+            ViewGroup.LayoutParams params = child.getLayoutParams();
+            ViewGroup parent = (ViewGroup) child.getParent();
+            int index = 0;
+
+            if (parent != null) {
+                index = parent.indexOfChild(child);
+                parent.removeView(child);
+            }
+
+            layout.addView(child, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+
+            if (parent != null) {
+                parent.addView(layout, index, params);
+            }
+
+            return layout;
+        }
     }
 }

@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.balysv.materialripple.MaterialRippleLayout;
+
 
 public class DemoActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -15,8 +17,17 @@ public class DemoActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demo);
         findViewById(R.id.ripple_layout_1).setOnClickListener(this);
-        findViewById(R.id.ripple_layout_2).setOnClickListener(this);
         findViewById(R.id.ripple_layout_3).setOnClickListener(this);
+
+        // static initialization
+        View view = findViewById(R.id.ripple_layout_2);
+        MaterialRippleLayout.on(view)
+            .rippleColor(0xAA0044)
+            .rippleAlpha(0.9f)
+            .rippleHover(false)
+            .create();
+
+        view.setOnClickListener(this);
     }
 
     @Override public void onClick(View v) {
