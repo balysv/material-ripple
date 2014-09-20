@@ -17,14 +17,24 @@ repositories {
     }
 }
 
-compile 'com.balysv:material-ripple:1.0.2-SNAPSHOT@aar'
+compile 'com.balysv:material-ripple:1.0.3-SNAPSHOT@aar'
 compile 'com.nineoldandroids:library:2.4.0'
 ```
 
 Usage
 -----
 
-Wrap your `View` with `MaterialRippleLayout` in your layout file:
+Use static initializer on your `View` (see `xml` attributes below for customization)
+
+```java
+MaterialRippleLayout.on(view)
+           .rippleColor(Color.WHITE)
+           .rippleAlpha(0.9f)
+           .rippleHover(false)
+           .create();
+```
+
+Or wrap your `View` with `MaterialRippleLayout` in your layout file:
 
 ```xml
 <com.balysv.materialripple.MaterialRippleLayout
