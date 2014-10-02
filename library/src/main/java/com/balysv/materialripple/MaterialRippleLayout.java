@@ -262,7 +262,7 @@ public class MaterialRippleLayout extends FrameLayout {
                     setRadius(0);
                     setRippleAlpha(rippleAlpha);
                 }
-                if (animationEndRunnable != null) {
+                if (animationEndRunnable != null && rippleDelayClick) {
                     animationEndRunnable.run();
                 }
             }
