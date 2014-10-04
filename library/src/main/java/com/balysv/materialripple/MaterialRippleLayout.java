@@ -169,7 +169,7 @@ public class MaterialRippleLayout extends FrameLayout {
         boolean isEventInBounds = bounds.contains((int) eventX, (int) eventY);
 
         if (gestureDetector.onTouchEvent(event)) {
-            PerformClickEvent clickEvent = new PerformClickEvent(event);
+            PerformClickEvent clickEvent = new PerformClickEvent();
             if (!rippleDelayClick) {
                 clickEvent.run();
             }
@@ -178,7 +178,7 @@ public class MaterialRippleLayout extends FrameLayout {
             int action = event.getActionMasked();
             switch (action) {
                 case MotionEvent.ACTION_UP:
-                    PerformClickEvent clickEvent = new PerformClickEvent(event);
+                    PerformClickEvent clickEvent = new PerformClickEvent();
                     if (isEventInBounds) {
                         startRipple(clickEvent);
                     } else {
@@ -405,12 +405,6 @@ public class MaterialRippleLayout extends FrameLayout {
      */
     private class PerformClickEvent implements Runnable {
 
-        private final MotionEvent event;
-
-        public PerformClickEvent(MotionEvent event) {
-            this.event = event;
-        }
-
         @Override public void run() {
             // if parent is an AdapterView, try to call its ItemClickListener
             if (getParent() instanceof AdapterView) {
@@ -423,10 +417,8 @@ public class MaterialRippleLayout extends FrameLayout {
                     parent.performItemClick(MaterialRippleLayout.this, position, itemId);
                 }
             } else {
-                // otherwise, just pass event to child view
-                if (event != null) {
-                    childView.onTouchEvent(event);
-                }
+                // otherwise, just perform click on child
+                childView.performClick();
             }
         }
     }
