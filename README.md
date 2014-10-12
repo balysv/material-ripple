@@ -86,7 +86,7 @@ MyCustomView view = MaterialRippleLayout.getChildView();
 
 Developed By
 --------------------
-Balys Valentukevicius - <balys.v@gmail.com>
+Balys Valentukevicius
 
 License
 -----------
