@@ -47,44 +47,44 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class MaterialRippleLayout extends FrameLayout {
 
-    private static final int     DEFAULT_DURATION      = 300;
-    private static final int     DEFAULT_FADE_DURATION = 50;
-    private static final float   DEFAULT_DIAMETER_DP   = 35;
-    private static final float   DEFAULT_ALPHA         = 0.7f;
-    private static final int     DEFAULT_COLOR         = Color.BLACK;
-    private static final int     DEFAULT_BACKGROUND    = Color.TRANSPARENT;
-    private static final boolean DEFAULT_HOVER         = true;
-    private static final boolean DEFAULT_DELAY_CLICK   = true;
-    private static final boolean DEFAULT_PERSISTENT    = false;
+    private static final int DEFAULT_DURATION = 300;
+    private static final int DEFAULT_FADE_DURATION = 50;
+    private static final float DEFAULT_DIAMETER_DP = 35;
+    private static final float DEFAULT_ALPHA = 0.7f;
+    private static final int DEFAULT_COLOR = Color.BLACK;
+    private static final int DEFAULT_BACKGROUND = Color.TRANSPARENT;
+    private static final boolean DEFAULT_HOVER = true;
+    private static final boolean DEFAULT_DELAY_CLICK = true;
+    private static final boolean DEFAULT_PERSISTENT = false;
 
     private static final boolean DEFAULT_RIPPLE_OVERLAY = true;
 
-    private static final int  FADE_EXTRA_DELAY = 25;
-    private static final long HOVER_DURATION   = 150;
+    private static final int FADE_EXTRA_DELAY = 25;
+    private static final long HOVER_DURATION = 150;
 
-    private final Paint paint  = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Rect  bounds = new Rect();
+    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Rect bounds = new Rect();
 
-    private int      rippleColor;
-    private boolean  rippleOverlay;
-    private boolean  rippleHover;
-    private int      rippleDiameter;
-    private int      rippleDuration;
-    private int      rippleAlpha;
-    private boolean  rippleDelayClick;
-    private int      rippleFadeDuration;
-    private boolean  ripplePersistent;
+    private int rippleColor;
+    private boolean rippleOverlay;
+    private boolean rippleHover;
+    private int rippleDiameter;
+    private int rippleDuration;
+    private int rippleAlpha;
+    private boolean rippleDelayClick;
+    private int rippleFadeDuration;
+    private boolean ripplePersistent;
     private Drawable rippleBackground;
 
     private float radius;
 
     private View childView;
 
-    private AnimatorSet    rippleAnimator;
+    private AnimatorSet rippleAnimator;
     private ObjectAnimator hoverAnimator;
 
-    private float   eventX;
-    private float   eventY;
+    private float eventX;
+    private float eventY;
     private boolean eventCancelled;
 
     private GestureDetector gestureDetector;
@@ -110,8 +110,8 @@ public class MaterialRippleLayout extends FrameLayout {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MaterialRippleLayout);
         rippleColor = a.getColor(R.styleable.MaterialRippleLayout_rippleColor, DEFAULT_COLOR);
         rippleDiameter = a.getDimensionPixelSize(
-            R.styleable.MaterialRippleLayout_rippleDimension,
-            (int) dpToPx(getResources(), DEFAULT_DIAMETER_DP)
+                R.styleable.MaterialRippleLayout_rippleDimension,
+                (int) dpToPx(getResources(), DEFAULT_DIAMETER_DP)
         );
         rippleOverlay = a.getBoolean(R.styleable.MaterialRippleLayout_rippleOverlay, DEFAULT_RIPPLE_OVERLAY);
         rippleHover = a.getBoolean(R.styleable.MaterialRippleLayout_rippleHover, DEFAULT_HOVER);
@@ -228,7 +228,7 @@ public class MaterialRippleLayout extends FrameLayout {
             hoverAnimator.cancel();
         }
         hoverAnimator = ObjectAnimator.ofFloat(this, radiusProperty, 0, rippleDiameter)
-            .setDuration(HOVER_DURATION);
+                .setDuration(HOVER_DURATION);
         hoverAnimator.setInterpolator(new DecelerateInterpolator(3));
         hoverAnimator.start();
     }
@@ -257,7 +257,8 @@ public class MaterialRippleLayout extends FrameLayout {
 
         rippleAnimator = new AnimatorSet();
         rippleAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override public void onAnimationEnd(Animator animation) {
+            @Override
+            public void onAnimationEnd(Animator animation) {
                 if (!ripplePersistent) {
                     setRadius(0);
                     setRippleAlpha(rippleAlpha);
@@ -311,7 +312,7 @@ public class MaterialRippleLayout extends FrameLayout {
      * Animations
      */
     private Property<MaterialRippleLayout, Float> radiusProperty
-        = new Property<MaterialRippleLayout, Float>(Float.class, "radius") {
+            = new Property<MaterialRippleLayout, Float>(Float.class, "radius") {
         @Override
         public Float get(MaterialRippleLayout object) {
             return object.getRadius();
@@ -334,7 +335,7 @@ public class MaterialRippleLayout extends FrameLayout {
     }
 
     private Property<MaterialRippleLayout, Integer> circleAlphaProperty
-        = new Property<MaterialRippleLayout, Integer>(Integer.class, "rippleAlpha") {
+            = new Property<MaterialRippleLayout, Integer>(Integer.class, "rippleAlpha") {
         @Override
         public Integer get(MaterialRippleLayout object) {
             return object.getRippleAlpha();
@@ -410,14 +411,15 @@ public class MaterialRippleLayout extends FrameLayout {
      */
     private class PerformClickEvent implements Runnable {
 
-        @Override public void run() {
+        @Override
+        public void run() {
             // if parent is an AdapterView, try to call its ItemClickListener
             if (getParent() instanceof AdapterView) {
                 AdapterView parent = (AdapterView) getParent();
                 final int position = parent.getPositionForView(MaterialRippleLayout.this);
                 final long itemId = parent.getAdapter() != null
-                    ? parent.getAdapter().getItemId(position)
-                    : 0;
+                        ? parent.getAdapter().getItemId(position)
+                        : 0;
                 if (position != AdapterView.INVALID_POSITION) {
                     parent.performItemClick(MaterialRippleLayout.this, position, itemId);
                 }
@@ -452,18 +454,18 @@ public class MaterialRippleLayout extends FrameLayout {
     public static class RippleBuilder {
 
         private final Context context;
-        private final View    child;
+        private final View child;
 
-        private int     rippleColor        = DEFAULT_COLOR;
-        private boolean rippleOverlay      = DEFAULT_RIPPLE_OVERLAY;
-        private boolean rippleHover        = DEFAULT_HOVER;
-        private float   rippleDiameter     = DEFAULT_DIAMETER_DP;
-        private int     rippleDuration     = DEFAULT_DURATION;
-        private float   rippleAlpha        = DEFAULT_ALPHA;
-        private boolean rippleDelayClick   = DEFAULT_DELAY_CLICK;
-        private int     rippleFadeDuration = DEFAULT_FADE_DURATION;
-        private boolean ripplePersistent   = DEFAULT_PERSISTENT;
-        private int     rippleBackground   = DEFAULT_BACKGROUND;
+        private int rippleColor = DEFAULT_COLOR;
+        private boolean rippleOverlay = DEFAULT_RIPPLE_OVERLAY;
+        private boolean rippleHover = DEFAULT_HOVER;
+        private float rippleDiameter = DEFAULT_DIAMETER_DP;
+        private int rippleDuration = DEFAULT_DURATION;
+        private float rippleAlpha = DEFAULT_ALPHA;
+        private boolean rippleDelayClick = DEFAULT_DELAY_CLICK;
+        private int rippleFadeDuration = DEFAULT_FADE_DURATION;
+        private boolean ripplePersistent = DEFAULT_PERSISTENT;
+        private int rippleBackground = DEFAULT_BACKGROUND;
 
         public RippleBuilder(View child) {
             this.child = child;
@@ -537,6 +539,10 @@ public class MaterialRippleLayout extends FrameLayout {
             ViewGroup parent = (ViewGroup) child.getParent();
             int index = 0;
 
+            if (parent != null && parent instanceof MaterialRippleLayout) {
+                throw new IllegalStateException("The MaterialRippleLayout was not created because the parent of the view already is a MaterialRippleLayout");
+            }
+            
             if (parent != null) {
                 index = parent.indexOfChild(child);
                 parent.removeView(child);
@@ -549,6 +555,7 @@ public class MaterialRippleLayout extends FrameLayout {
             }
 
             return layout;
+
         }
     }
 }
