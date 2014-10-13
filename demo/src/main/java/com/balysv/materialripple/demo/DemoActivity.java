@@ -1,6 +1,7 @@
 package com.balysv.materialripple.demo;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -26,6 +27,12 @@ public class DemoActivity extends ActionBarActivity implements View.OnClickListe
             .rippleAlpha(0.9f)
             .rippleHover(false)
             .create();
+
+        MaterialRippleLayout.on(view)
+                .rippleColor(Color.BLUE)
+                .rippleAlpha(0.7f)
+                .rippleHover(true)
+                .create();
 
         view.setOnClickListener(this);
     }

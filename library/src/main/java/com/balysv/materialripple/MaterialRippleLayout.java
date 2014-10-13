@@ -26,6 +26,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -61,6 +62,7 @@ public class MaterialRippleLayout extends FrameLayout {
 
     private static final int  FADE_EXTRA_DELAY = 25;
     private static final long HOVER_DURATION   = 150;
+    public static final String TAG = "MaterialRippleLayout";
 
     private final Paint paint  = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Rect  bounds = new Rect();
@@ -532,18 +534,23 @@ public class MaterialRippleLayout extends FrameLayout {
             ViewGroup parent = (ViewGroup) child.getParent();
             int index = 0;
 
-            if (parent != null) {
-                index = parent.indexOfChild(child);
-                parent.removeView(child);
+            if (parent != null && parent instanceof MaterialRippleLayout) {
+                Log.w(TAG, "The MaterialRippleLayout was not created because the parent of the view already is a MaterialRippleLayout");
+                return (MaterialRippleLayout) parent;
             }
+                if (parent != null) {
+                    index = parent.indexOfChild(child);
+                    parent.removeView(child);
+                }
 
-            layout.addView(child, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+                layout.addView(child, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
 
-            if (parent != null) {
-                parent.addView(layout, index, params);
-            }
+                if (parent != null) {
+                    parent.addView(layout, index, params);
+                }
 
-            return layout;
+                return layout;
+
         }
     }
 }
