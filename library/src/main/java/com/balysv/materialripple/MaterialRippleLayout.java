@@ -361,6 +361,8 @@ public class MaterialRippleLayout extends FrameLayout {
     public void setRippleColor(int rippleColor) {
         this.rippleColor = rippleColor;
         paint.setColor(rippleColor);
+        paint.setAlpha(rippleAlpha);
+        invalidate();
     }
 
     public void setRippleOverlay(boolean rippleOverlay) {
@@ -376,7 +378,9 @@ public class MaterialRippleLayout extends FrameLayout {
     }
 
     public void setRippleBackground(int color) {
-        this.rippleBackground = new ColorDrawable(color);
+        rippleBackground = new ColorDrawable(color);
+        rippleBackground.setBounds(bounds);
+        invalidate();
     }
 
     public void setRippleHover(boolean rippleHover) {
@@ -398,6 +402,7 @@ public class MaterialRippleLayout extends FrameLayout {
     public void setDefaultRippleAlpha(int alpha) {
         this.rippleAlpha = alpha;
         paint.setAlpha(alpha);
+        invalidate();
     }
 
     /*
