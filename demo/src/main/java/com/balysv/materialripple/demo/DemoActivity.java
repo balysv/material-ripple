@@ -28,12 +28,6 @@ public class DemoActivity extends ActionBarActivity implements View.OnClickListe
             .rippleHover(false)
             .create();
 
-        MaterialRippleLayout.on(view)
-                .rippleColor(Color.BLUE)
-                .rippleAlpha(0.7f)
-                .rippleHover(true)
-                .create();
-
         view.setOnClickListener(this);
     }
 
