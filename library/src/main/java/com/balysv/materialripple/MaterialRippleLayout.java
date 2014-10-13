@@ -537,6 +537,10 @@ public class MaterialRippleLayout extends FrameLayout {
             ViewGroup parent = (ViewGroup) child.getParent();
             int index = 0;
 
+            if (parent != null && parent instanceof MaterialRippleLayout) {
+                throw new IllegalStateException("MaterialRippleLayout could not be created: parent of the view already is a MaterialRippleLayout");
+            }
+
             if (parent != null) {
                 index = parent.indexOfChild(child);
                 parent.removeView(child);
