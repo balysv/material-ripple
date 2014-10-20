@@ -87,7 +87,8 @@ public class MaterialRippleLayout extends FrameLayout {
     private float   eventY;
     private boolean eventCancelled;
 
-    private GestureDetector gestureDetector;
+    private GestureDetector   gestureDetector;
+    private PerformClickEvent pendingClickEvent;
 
     public static RippleBuilder on(View view) {
         return new RippleBuilder(view);
@@ -105,7 +106,7 @@ public class MaterialRippleLayout extends FrameLayout {
         super(context, attrs, defStyle);
 
         setWillNotDraw(false);
-        gestureDetector = new GestureDetector(getContext(), new SingleTapConfirm());
+        gestureDetector = new GestureDetector(context, longClickListener);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MaterialRippleLayout);
         rippleColor = a.getColor(R.styleable.MaterialRippleLayout_rippleColor, DEFAULT_COLOR);
@@ -168,24 +169,21 @@ public class MaterialRippleLayout extends FrameLayout {
 
         boolean isEventInBounds = bounds.contains((int) eventX, (int) eventY);
 
-        if (gestureDetector.onTouchEvent(event)) {
-            PerformClickEvent clickEvent = new PerformClickEvent();
-            if (!rippleDelayClick) {
-                clickEvent.run();
-            }
-            startRipple(clickEvent);
+        boolean gestureResult = gestureDetector.onTouchEvent(event);
+        if (gestureResult) {
+            return true;
         } else {
             int action = event.getActionMasked();
             switch (action) {
                 case MotionEvent.ACTION_UP:
-                    PerformClickEvent clickEvent = new PerformClickEvent();
+                    pendingClickEvent = new PerformClickEvent();
                     if (isEventInBounds) {
-                        startRipple(clickEvent);
+                        startRipple(pendingClickEvent);
                     } else {
                         setRadius(0);
                     }
                     if (!rippleDelayClick) {
-                        clickEvent.run();
+                        pendingClickEvent.run();
                     }
                     break;
                 case MotionEvent.ACTION_DOWN:
@@ -217,9 +215,15 @@ public class MaterialRippleLayout extends FrameLayout {
                     }
                     break;
             }
+            return true;
         }
-        return true;
     }
+
+    private SimpleOnGestureListener longClickListener = new GestureDetector.SimpleOnGestureListener() {
+        public void onLongPress(MotionEvent e) {
+            childView.performLongClick();
+        }
+    };
 
     private void startHover() {
         if (eventCancelled) return;
@@ -425,19 +429,6 @@ public class MaterialRippleLayout extends FrameLayout {
                 // otherwise, just perform click on child
                 childView.performClick();
             }
-        }
-    }
-
-    private class SingleTapConfirm extends SimpleOnGestureListener {
-
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent event) {
-            return true;
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent event) {
-            return true;
         }
     }
 
