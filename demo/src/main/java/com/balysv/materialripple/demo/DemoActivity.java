@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 
@@ -18,6 +19,12 @@ public class DemoActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.demo);
         findViewById(R.id.ripple_layout_1).setOnClickListener(this);
         findViewById(R.id.ripple_layout_3).setOnClickListener(this);
+        findViewById(R.id.ripple_layout_1).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override public boolean onLongClick(View v) {
+                Toast.makeText(DemoActivity.this, "LONG", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
         // static initialization
         View view = findViewById(R.id.ripple_layout_2);
@@ -31,6 +38,7 @@ public class DemoActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override public void onClick(View v) {
+        Toast.makeText(DemoActivity.this, "SHORT", Toast.LENGTH_SHORT).show();
     }
 
     @Override

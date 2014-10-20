@@ -31,6 +31,12 @@ public class DemoListActivity extends ActionBarActivity implements AdapterView.O
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(new ArrayAdapter<>(this, R.layout.demo_list_item, android.R.id.text1, data));
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(DemoListActivity.this, "Rippled  long item: " + position, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
