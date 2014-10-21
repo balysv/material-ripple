@@ -17,7 +17,7 @@ repositories {
     }
 }
 
-compile 'com.balysv:material-ripple:1.0.6-SNAPSHOT@aar'
+compile 'com.balysv:material-ripple:0.9.0-SNAPSHOT@aar'
 compile 'com.nineoldandroids:library:2.4.0'
 ```
 
@@ -28,9 +28,7 @@ Use static initializer on your `View` (see `xml` attributes below for customizat
 
 ```java
 MaterialRippleLayout.on(view)
-           .rippleColor(Color.WHITE)
-           .rippleAlpha(0.9f)
-           .rippleHover(false)
+           .rippleColor(Color.BLACK)
            .create();
 ```
 
@@ -56,13 +54,13 @@ Configure using xml attributes or appropriate setters in code:
 ```xml
 app:rippleOverlay="true"       // if true, ripple is drawn in foreground; false - background
 app:rippleColor="#ff0000"      // color of ripple
-app:rippleAlpha="0.7"          // alpha of ripple
-app:rippleDimension="35dp"     // radius of hover and starting ripple
-app:rippleHover="false"        // if true, a hover effect is drawn when view is touched
-app:rippleDuration="400"       // duration of ripple animation
-app:rippleFadeDuration="50"    // duration of fade out effect on ripple
-app:rippleBackground="#FFFFFF" // background under ripple drawable; used with rippleOverlay="false"
+app:rippleAlpha="0.1"          // alpha of ripple
+app:rippleDimension="10dp"     // radius of hover and starting ripple
+app:rippleHover="true"        // if true, a hover effect is drawn when view is touched
+app:rippleDuration="350"       // duration of ripple animation
+app:rippleFadeDuration="75"    // duration of fade out effect on ripple
 app:rippleDelayClick="true"    // if true, delays calls to OnClickListeners until ripple effect ends
+app:rippleBackground="#FFFFFF" // background under ripple drawable; used with rippleOverlay="false"
 app:ripplePersistent="true"    // if true, ripple background color persists after animation, until setRadius(0) is called
 ```
 
