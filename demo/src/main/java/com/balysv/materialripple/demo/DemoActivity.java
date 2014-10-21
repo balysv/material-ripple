@@ -1,6 +1,7 @@
 package com.balysv.materialripple.demo;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -11,34 +12,36 @@ import android.widget.Toast;
 import com.balysv.materialripple.MaterialRippleLayout;
 
 
-public class DemoActivity extends ActionBarActivity implements View.OnClickListener {
+public class DemoActivity extends ActionBarActivity implements View.OnClickListener, View.OnLongClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demo);
+
+        // xml initialization
         findViewById(R.id.ripple_layout_1).setOnClickListener(this);
-        findViewById(R.id.ripple_layout_3).setOnClickListener(this);
-        findViewById(R.id.ripple_layout_1).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override public boolean onLongClick(View v) {
-                Toast.makeText(DemoActivity.this, "LONG", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
+        findViewById(R.id.ripple_layout_1).setOnLongClickListener(this);
 
         // static initialization
         View view = findViewById(R.id.ripple_layout_2);
         MaterialRippleLayout.on(view)
-            .rippleColor(0xAA0044)
-            .rippleAlpha(0.9f)
-            .rippleHover(false)
+            .rippleColor(Color.parseColor("#FF0000"))
+            .rippleAlpha(0.2f)
+            .rippleHover(true)
             .create();
 
+        view.setOnLongClickListener(this);
         view.setOnClickListener(this);
     }
 
     @Override public void onClick(View v) {
-        Toast.makeText(DemoActivity.this, "SHORT", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Short click", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public boolean onLongClick(View v) {
+        Toast.makeText(this, "Long click", Toast.LENGTH_SHORT).show();
+        return false;
     }
 
     @Override

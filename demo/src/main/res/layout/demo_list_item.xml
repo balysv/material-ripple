@@ -6,10 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     app:rippleOverlay="false"
-    app:rippleColor="#ffff00"
-    app:rippleDimension="35dp"
-    app:rippleAlpha="0.95"
-    app:rippleHover="false">
+    app:rippleColor="#585858"
+    app:rippleAlpha="0.2"
+    app:rippleHover="true">
 
     <TextView
         android:id="@android:id/text1"
@@ -18,6 +17,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="8dp"
         android:textSize="20sp"
+        android:background="@drawable/selector"
         android:singleLine="true"
         android:ellipsize="end"
         android:paddingRight="8dp"
