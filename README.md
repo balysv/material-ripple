@@ -17,7 +17,7 @@ repositories {
     }
 }
 
-compile 'com.balysv:material-ripple:0.9.2-SNAPSHOT@aar'
+compile 'com.balysv:material-ripple:0.9.3-SNAPSHOT@aar'
 ```
 
 See [https://github.com/balysv/material-ripple/issues](issues) for upcoming features and requests.
@@ -48,6 +48,8 @@ Or wrap your `View` with `MaterialRippleLayout` in your layout file:
         android:text="Button inside a ripple"/>
 
 </com.balysv.materialripple.MaterialRippleLayout>
+
+If using in an `AdapterView` you must set `rippleInAdapter` to `true`
 ```
 
 Configure using xml attributes or appropriate setters in code:
@@ -58,12 +60,12 @@ app:rippleColor="#ff0000"             // color of ripple
 app:rippleAlpha="0.1"                 // alpha of ripple
 app:rippleDimension="10dp"            // radius of hover and starting ripple
 app:rippleHover="true"                // if true, a hover effect is drawn when view is touched
+app:rippleInAdapter="true"            // if true, MaterialRippleLayout will optimize for use in AdapterViews
 app:rippleDuration="350"              // duration of ripple animation
 app:rippleFadeDuration="75"           // duration of fade out effect on ripple
 app:rippleDelayClick="true"           // if true, delays calls to OnClickListeners until ripple effect ends
 app:rippleBackground="#FFFFFF"        // background under ripple drawable; used with rippleOverlay="false"
 app:ripplePersistent="true"           // if true, ripple background color persists after animation, until setRadius(0) is called
-app:rippleSearchParentAdapter="false" // if true, MaterialRippleLayout will traverse up the view hierarchy until it finds an AdapterView to pass click events. Used with view wrappers for item views.
 ```
 
 Set an `OnClickListener` to `MaterialRippleLayout`:
