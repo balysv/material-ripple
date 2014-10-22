@@ -361,6 +361,11 @@ public class MaterialRippleLayout extends FrameLayout {
         rippleBackground.setBounds(bounds);
     }
 
+    @Override
+    public boolean isInEditMode() {
+        return true;
+    }
+
     /*
      * Drawing
      */
