@@ -488,14 +488,18 @@ public class MaterialRippleLayout extends FrameLayout {
             // if parent is an AdapterView, try to call its ItemClickListener
             if (getParent() instanceof AdapterView) {
                 clickAdapterView((AdapterView) getParent());
-            } else if (isScrollContainer() && rippleSearchAdapter) {
+            } else if (rippleSearchAdapter) {
                 ViewParent current = getParent().getParent();
                 while (true) {
                     if (current instanceof AdapterView) {
                         clickAdapterView((AdapterView) current);
                         break;
                     } else {
-                        current = current.getParent();
+                        try {
+                            current = current.getParent();
+                        } catch (NullPointerException npe) {
+                            throw new RuntimeException("Could not find a parent AdapterView");
+                        }
                     }
                 }
             } else {
