@@ -11,5 +11,6 @@
         <attr name="rippleBackground" format="color"/>
         <attr name="rippleDelayClick" format="boolean"/>
         <attr name="ripplePersistent" format="boolean"/>
+        <attr name="rippleSearchParentAdapter" format="boolean"/>
     </declare-styleable>
 </resources>

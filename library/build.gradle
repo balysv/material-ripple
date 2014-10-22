@@ -1,15 +1,15 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 20
-    buildToolsVersion "20.0.0"
+    compileSdkVersion 21
+    buildToolsVersion "21.0.1"
 
     defaultConfig {
         applicationId 'com.balysv.materialripple'
-        minSdkVersion 9
-        targetSdkVersion 20
-        versionCode 5
-        versionName "1.2.0"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0.0"
     }
 
     compileOptions {
@@ -19,7 +19,6 @@ android {
 }
 
 dependencies {
-    compile 'com.nineoldandroids:library:2.4.0'
 }
 
 apply from: '../maven_push.gradle'
