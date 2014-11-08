@@ -48,9 +48,10 @@ Or wrap your `View` with `MaterialRippleLayout` in your layout file:
         android:text="Button inside a ripple"/>
 
 </com.balysv.materialripple.MaterialRippleLayout>
+```
 
 If using in an `AdapterView` you must set `rippleInAdapter` to `true`
-```
+
 
 Configure using xml attributes or appropriate setters in code:
 
