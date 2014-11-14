@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.1"
+    buildToolsVersion "21.0.2"
 
     defaultConfig {
         applicationId 'com.balysv.materialripple'
@@ -21,4 +21,4 @@ android {
 dependencies {
 }
 
-apply from: '../maven_push.gradle'
+//apply from: '../maven_push.gradle'
