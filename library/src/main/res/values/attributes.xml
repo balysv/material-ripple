@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="MaterialRippleLayout">
-        <attr name="rippleColor" format="color"/>
-        <attr name="rippleDimension" format="dimension"/>
-        <attr name="rippleOverlay" format="boolean"/>
-        <attr name="rippleAlpha" format="float"/>
-        <attr name="rippleDuration" format="integer"/>
-        <attr name="rippleFadeDuration" format="integer"/>
-        <attr name="rippleHover" format="boolean"/>
-        <attr name="rippleBackground" format="color"/>
-        <attr name="rippleDelayClick" format="boolean"/>
-        <attr name="ripplePersistent" format="boolean"/>
-        <attr name="rippleInAdapter" format="boolean"/>
+        <attr name="rippleColor" format="color" localization="suggested" />
+        <attr name="rippleDimension" format="dimension" localization="suggested" />
+        <attr name="rippleOverlay" format="boolean" localization="suggested" />
+        <attr name="rippleAlpha" format="float" localization="suggested" />
+        <attr name="rippleDuration" format="integer" localization="suggested" />
+        <attr name="rippleFadeDuration" format="integer" localization="suggested" />
+        <attr name="rippleHover" format="boolean" localization="suggested" />
+        <attr name="rippleBackground" format="color" localization="suggested" />
+        <attr name="rippleDelayClick" format="boolean" localization="suggested" />
+        <attr name="ripplePersistent" format="boolean" localization="suggested" />
+        <attr name="rippleInAdapter" format="boolean" localization="suggested" />
     </declare-styleable>
 </resources>
