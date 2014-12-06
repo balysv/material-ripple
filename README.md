@@ -87,6 +87,15 @@ Access your child `View` if necessary:
 MyCustomView view = MaterialRippleLayout.getChildView();
 ```
 
+Support for Android api versions <  14 
+-----
+
+For those unlucky developers that need to support older versions than 14, there's a way to do it.
+
+You can use this library in addition with Jake Wharton's animation backport (http://nineoldandroids.com/) changing the imports from ` import android.animation.*;` to: ` import com.nineoldandroids.animation.*;` ,
+`import android.util.Property`; to   `import com.nineoldandroids.util.Property;` and in MaterialRippleLayout.java file, calling function `shouldDelayChildPressedState()`  only if you're using api greater than 14.
+
+
 Developed By
 --------------------
 Balys Valentukevicius
