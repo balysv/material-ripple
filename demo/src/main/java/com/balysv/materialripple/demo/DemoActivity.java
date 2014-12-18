@@ -40,8 +40,12 @@ public class DemoActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override public boolean onLongClick(View v) {
-        Toast.makeText(this, "Long click", Toast.LENGTH_SHORT).show();
-        return false;
+        if(v.getId()==R.id.ripple_layout_1){
+            Toast.makeText(this, "Long click not consumed", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        Toast.makeText(this, "Long click and consumed", Toast.LENGTH_SHORT).show();
+        return true;
     }
 
     @Override
