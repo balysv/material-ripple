@@ -182,7 +182,7 @@ public class MaterialRippleLayout extends FrameLayout {
         }
 
         boolean gestureResult = gestureDetector.onTouchEvent(event);
-        if (gestureResult) {
+        if (gestureResult || mHasPerformedLongPress) {
             return true;
         } else {
             int action = event.getActionMasked();
@@ -213,17 +213,13 @@ public class MaterialRippleLayout extends FrameLayout {
                 case MotionEvent.ACTION_DOWN:
                     setPositionInAdapter();
                     eventCancelled = false;
+                    pendingPressEvent = new PressedEvent(event);
                     if (isInScrollingContainer()) {
                         cancelPressedEvent();
                         prepressed = true;
-                        pendingPressEvent = new PressedEvent(event);
                         postDelayed(pendingPressEvent, ViewConfiguration.getTapTimeout());
                     } else {
-                        childView.onTouchEvent(event);
-                        childView.setPressed(true);
-                        if (rippleHover) {
-                            startHover();
-                        }
+                        pendingPressEvent.run();
                     }
                     break;
                 case MotionEvent.ACTION_CANCEL:
@@ -272,9 +268,21 @@ public class MaterialRippleLayout extends FrameLayout {
         }
     }
 
+    private boolean mHasPerformedLongPress;
     private SimpleOnGestureListener longClickListener = new GestureDetector.SimpleOnGestureListener() {
         public void onLongPress(MotionEvent e) {
-            childView.performLongClick();
+            mHasPerformedLongPress = childView.performLongClick();
+            if(mHasPerformedLongPress){
+                if (rippleHover) {
+                    startRipple(null);
+                }
+                cancelPressedEvent();
+            }
+        }
+        @Override
+        public boolean onDown(MotionEvent e) {
+            mHasPerformedLongPress = false;
+            return super.onDown(e);
         }
     };
 
@@ -550,6 +558,8 @@ public class MaterialRippleLayout extends FrameLayout {
     private class PerformClickEvent implements Runnable {
 
         @Override public void run() {
+            if(mHasPerformedLongPress) return;
+
             // if parent is an AdapterView, try to call its ItemClickListener
             if (getParent() instanceof AdapterView) {
                 clickAdapterView((AdapterView) getParent());
@@ -584,6 +594,7 @@ public class MaterialRippleLayout extends FrameLayout {
         @Override
         public void run() {
             prepressed = false;
+            childView.setLongClickable(false);//prevent the child's long click,let's the ripple layout call it's performLongClick
             childView.onTouchEvent(event);
             childView.setPressed(true);
             if (rippleHover) {
