@@ -17,7 +17,7 @@ repositories {
     }
 }
 
-compile 'com.balysv:material-ripple:0.9.4-SNAPSHOT@aar'
+compile 'com.balysv:material-ripple:0.9.5-SNAPSHOT@aar'
 ```
 
 See [https://github.com/balysv/material-ripple/issues](issues) for upcoming features and requests.
