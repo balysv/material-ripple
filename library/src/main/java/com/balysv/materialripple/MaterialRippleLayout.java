@@ -684,7 +684,7 @@ public class MaterialRippleLayout extends FrameLayout {
         }
 
         public RippleBuilder rippleInAdapter(boolean inAdapter) {
-            this.rippleInAdapter(inAdapter);
+            this.rippleSearchAdapter = inAdapter;
             return this;
         }
 
