@@ -26,8 +26,10 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -45,6 +47,8 @@ import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 
+import com.sasaug.material.R;
+
 import static android.view.GestureDetector.SimpleOnGestureListener;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -61,6 +65,7 @@ public class MaterialRippleLayout extends FrameLayout {
     private static final boolean DEFAULT_PERSISTENT     = false;
     private static final boolean DEFAULT_SEARCH_ADAPTER = false;
     private static final boolean DEFAULT_RIPPLE_OVERLAY = false;
+    private static final float   DEFAULT_ROUNDED_CORNER = 0;
 
     private static final int  FADE_EXTRA_DELAY = 50;
     private static final long HOVER_DURATION   = 2500;
@@ -79,6 +84,7 @@ public class MaterialRippleLayout extends FrameLayout {
     private boolean  ripplePersistent;
     private Drawable rippleBackground;
     private boolean  rippleInAdapter;
+    private float      rippleRoundedCorner;
 
     private float radius;
 
@@ -132,6 +138,7 @@ public class MaterialRippleLayout extends FrameLayout {
         rippleBackground = new ColorDrawable(a.getColor(R.styleable.MaterialRippleLayout_rippleBackground, DEFAULT_BACKGROUND));
         ripplePersistent = a.getBoolean(R.styleable.MaterialRippleLayout_ripplePersistent, DEFAULT_PERSISTENT);
         rippleInAdapter = a.getBoolean(R.styleable.MaterialRippleLayout_rippleInAdapter, DEFAULT_SEARCH_ADAPTER);
+        rippleRoundedCorner = a.getFloat(R.styleable.MaterialRippleLayout_rippleRoundedCorner, DEFAULT_ROUNDED_CORNER);
 
         a.recycle();
 
@@ -439,6 +446,12 @@ public class MaterialRippleLayout extends FrameLayout {
             }
             super.draw(canvas);
             if (!positionChanged) {
+                if(rippleRoundedCorner != 0){
+                    Path clipPath = new Path();
+                    RectF rect = new RectF(0, 0, canvas.getWidth(), canvas.getHeight());
+                    clipPath.addRoundRect(rect, rippleRoundedCorner, rippleRoundedCorner, Path.Direction.CW);
+                    canvas.clipPath(clipPath);
+                }
                 canvas.drawCircle(currentCoords.x, currentCoords.y, radius, paint);
             }
         } else {
@@ -546,6 +559,10 @@ public class MaterialRippleLayout extends FrameLayout {
         this.rippleInAdapter = rippleInAdapter;
     }
 
+    public void setRippleRoundedCorner(float rippleRoundedCorner) {
+        this.rippleRoundedCorner = rippleRoundedCorner;
+    }
+
     public void setDefaultRippleAlpha(int alpha) {
         this.rippleAlpha = alpha;
         paint.setAlpha(alpha);
@@ -627,6 +644,7 @@ public class MaterialRippleLayout extends FrameLayout {
         private boolean ripplePersistent    = DEFAULT_PERSISTENT;
         private int     rippleBackground    = DEFAULT_BACKGROUND;
         private boolean rippleSearchAdapter = DEFAULT_SEARCH_ADAPTER;
+        private float rippleRoundedCorner = DEFAULT_ROUNDED_CORNER;
 
         public RippleBuilder(View child) {
             this.child = child;
@@ -684,7 +702,12 @@ public class MaterialRippleLayout extends FrameLayout {
         }
 
         public RippleBuilder rippleInAdapter(boolean inAdapter) {
-            this.rippleInAdapter(inAdapter);
+            this.rippleSearchAdapter = inAdapter;
+            return this;
+        }
+
+        public RippleBuilder rippleRoundedCorner(float valueInDp){
+            this.rippleRoundedCorner = valueInDp;
             return this;
         }
 
@@ -701,6 +724,7 @@ public class MaterialRippleLayout extends FrameLayout {
             layout.setRippleOverlay(rippleOverlay);
             layout.setRippleBackground(rippleBackground);
             layout.setRippleInAdapter(rippleSearchAdapter);
+            layout.setRippleRoundedCorner(dpToPx(context.getResources(), rippleRoundedCorner));
 
             ViewGroup.LayoutParams params = child.getLayoutParams();
             ViewGroup parent = (ViewGroup) child.getParent();
