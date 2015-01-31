@@ -175,7 +175,7 @@ public class MaterialRippleLayout extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        return true;
+        return !findClickableViewInChild(childView, (int) event.getX(), (int) event.getY());
     }
 
     @Override
@@ -424,6 +424,26 @@ public class MaterialRippleLayout extends FrameLayout {
             return changed;
         }
         return false;
+    }
+
+    private boolean findClickableViewInChild(View view, int x, int y) {
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                View child = viewGroup.getChildAt(i);
+                final Rect rect = new Rect();
+                child.getHitRect(rect);
+
+                final boolean contains = rect.contains(x, y);
+                if (contains) {
+                    return findClickableViewInChild(child, x - rect.left, y - rect.top);
+                }
+            }
+        } else if (view != childView) {
+            return (view.isEnabled() && (view.isClickable() || view.isLongClickable() || view.isFocusableInTouchMode()));
+        }
+
+        return view.isFocusableInTouchMode();
     }
 
     @Override
