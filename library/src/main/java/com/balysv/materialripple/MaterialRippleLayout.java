@@ -574,6 +574,16 @@ public class MaterialRippleLayout extends FrameLayout {
         invalidate();
     }
 
+    public void performRipple() {
+        currentCoords = new Point(getWidth() / 2, getHeight() / 2);
+        startRipple(null);
+    }
+
+    public void performRipple(Point anchor) {
+        currentCoords = new Point(anchor.x, anchor.y);
+        startRipple(null);
+    }
+
     /**
      * {@link Canvas#clipPath(Path)} is not supported in hardware accelerated layers
      * before API 18. Use software layer instead
