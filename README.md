@@ -67,6 +67,7 @@ app:rippleFadeDuration="75"           // duration of fade out effect on ripple
 app:rippleDelayClick="true"           // if true, delays calls to OnClickListeners until ripple effect ends
 app:rippleBackground="#FFFFFF"        // background under ripple drawable; used with rippleOverlay="false"
 app:ripplePersistent="true"           // if true, ripple background color persists after animation, until setRadius(0) is called
+app:rippleRoundedCorners="10dp"       // radius of corners of ripples. Note: it uses software rendering pipeline for API 17 and below
 ```
 
 Set an `OnClickListener` to `MaterialRippleLayout`:

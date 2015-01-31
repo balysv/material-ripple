@@ -26,10 +26,13 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Property;
 import android.util.TypedValue;
@@ -50,17 +53,18 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class MaterialRippleLayout extends FrameLayout {
 
-    private static final int     DEFAULT_DURATION       = 350;
-    private static final int     DEFAULT_FADE_DURATION  = 75;
-    private static final float   DEFAULT_DIAMETER_DP    = 35;
-    private static final float   DEFAULT_ALPHA          = 0.2f;
-    private static final int     DEFAULT_COLOR          = Color.BLACK;
-    private static final int     DEFAULT_BACKGROUND     = Color.TRANSPARENT;
-    private static final boolean DEFAULT_HOVER          = true;
-    private static final boolean DEFAULT_DELAY_CLICK    = true;
-    private static final boolean DEFAULT_PERSISTENT     = false;
-    private static final boolean DEFAULT_SEARCH_ADAPTER = false;
-    private static final boolean DEFAULT_RIPPLE_OVERLAY = false;
+    private static final int     DEFAULT_DURATION        = 350;
+    private static final int     DEFAULT_FADE_DURATION   = 75;
+    private static final float   DEFAULT_DIAMETER_DP     = 35;
+    private static final float   DEFAULT_ALPHA           = 0.2f;
+    private static final int     DEFAULT_COLOR           = Color.BLACK;
+    private static final int     DEFAULT_BACKGROUND      = Color.TRANSPARENT;
+    private static final boolean DEFAULT_HOVER           = true;
+    private static final boolean DEFAULT_DELAY_CLICK     = true;
+    private static final boolean DEFAULT_PERSISTENT      = false;
+    private static final boolean DEFAULT_SEARCH_ADAPTER  = false;
+    private static final boolean DEFAULT_RIPPLE_OVERLAY  = false;
+    private static final int     DEFAULT_ROUNDED_CORNERS = 0;
 
     private static final int  FADE_EXTRA_DELAY = 50;
     private static final long HOVER_DURATION   = 2500;
@@ -79,6 +83,7 @@ public class MaterialRippleLayout extends FrameLayout {
     private boolean  ripplePersistent;
     private Drawable rippleBackground;
     private boolean  rippleInAdapter;
+    private float    rippleRoundedCorners;
 
     private float radius;
 
@@ -90,6 +95,8 @@ public class MaterialRippleLayout extends FrameLayout {
 
     private Point currentCoords  = new Point();
     private Point previousCoords = new Point();
+
+    private int layerType;
 
     private boolean eventCancelled;
     private boolean prepressed;
@@ -132,11 +139,14 @@ public class MaterialRippleLayout extends FrameLayout {
         rippleBackground = new ColorDrawable(a.getColor(R.styleable.MaterialRippleLayout_rippleBackground, DEFAULT_BACKGROUND));
         ripplePersistent = a.getBoolean(R.styleable.MaterialRippleLayout_ripplePersistent, DEFAULT_PERSISTENT);
         rippleInAdapter = a.getBoolean(R.styleable.MaterialRippleLayout_rippleInAdapter, DEFAULT_SEARCH_ADAPTER);
+        rippleRoundedCorners = a.getDimensionPixelSize(R.styleable.MaterialRippleLayout_rippleRoundedCorners, DEFAULT_ROUNDED_CORNERS);
 
         a.recycle();
 
         paint.setColor(rippleColor);
         paint.setAlpha(rippleAlpha);
+
+        enableClipPathSupportIfNecessary();
     }
 
 
@@ -272,13 +282,14 @@ public class MaterialRippleLayout extends FrameLayout {
     private SimpleOnGestureListener longClickListener = new GestureDetector.SimpleOnGestureListener() {
         public void onLongPress(MotionEvent e) {
             mHasPerformedLongPress = childView.performLongClick();
-            if(mHasPerformedLongPress){
+            if (mHasPerformedLongPress) {
                 if (rippleHover) {
                     startRipple(null);
                 }
                 cancelPressedEvent();
             }
         }
+
         @Override
         public boolean onDown(MotionEvent e) {
             mHasPerformedLongPress = false;
@@ -439,6 +450,12 @@ public class MaterialRippleLayout extends FrameLayout {
             }
             super.draw(canvas);
             if (!positionChanged) {
+                if (rippleRoundedCorners != 0) {
+                    Path clipPath = new Path();
+                    RectF rect = new RectF(0, 0, canvas.getWidth(), canvas.getHeight());
+                    clipPath.addRoundRect(rect, rippleRoundedCorners, rippleRoundedCorners, Path.Direction.CW);
+                    canvas.clipPath(clipPath);
+                }
                 canvas.drawCircle(currentCoords.x, currentCoords.y, radius, paint);
             }
         } else {
@@ -546,10 +563,32 @@ public class MaterialRippleLayout extends FrameLayout {
         this.rippleInAdapter = rippleInAdapter;
     }
 
+    public void setRippleRoundedCorners(int rippleRoundedCorner) {
+        this.rippleRoundedCorners = rippleRoundedCorner;
+        enableClipPathSupportIfNecessary();
+    }
+
     public void setDefaultRippleAlpha(int alpha) {
         this.rippleAlpha = alpha;
         paint.setAlpha(alpha);
         invalidate();
+    }
+
+    /**
+     * {@link Canvas#clipPath(Path)} is not supported in hardware accelerated layers
+     * before API 18. Use software layer instead
+     * <p/>
+     * https://developer.android.com/guide/topics/graphics/hardware-accel.html#unsupported
+     */
+    private void enableClipPathSupportIfNecessary() {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (rippleRoundedCorners != 0) {
+                layerType = getLayerType();
+                setLayerType(LAYER_TYPE_SOFTWARE, null);
+            } else {
+                setLayerType(layerType, null);
+            }
+        }
     }
 
     /*
@@ -558,7 +597,7 @@ public class MaterialRippleLayout extends FrameLayout {
     private class PerformClickEvent implements Runnable {
 
         @Override public void run() {
-            if(mHasPerformedLongPress) return;
+            if (mHasPerformedLongPress) return;
 
             // if parent is an AdapterView, try to call its ItemClickListener
             if (getParent() instanceof AdapterView) {
@@ -627,6 +666,7 @@ public class MaterialRippleLayout extends FrameLayout {
         private boolean ripplePersistent    = DEFAULT_PERSISTENT;
         private int     rippleBackground    = DEFAULT_BACKGROUND;
         private boolean rippleSearchAdapter = DEFAULT_SEARCH_ADAPTER;
+        private float   rippleRoundedCorner = DEFAULT_ROUNDED_CORNERS;
 
         public RippleBuilder(View child) {
             this.child = child;
@@ -688,6 +728,11 @@ public class MaterialRippleLayout extends FrameLayout {
             return this;
         }
 
+        public RippleBuilder rippleRoundedCorners(int radiusDp) {
+            this.rippleRoundedCorner = radiusDp;
+            return this;
+        }
+
         public MaterialRippleLayout create() {
             MaterialRippleLayout layout = new MaterialRippleLayout(context);
             layout.setRippleColor(rippleColor);
@@ -701,6 +746,7 @@ public class MaterialRippleLayout extends FrameLayout {
             layout.setRippleOverlay(rippleOverlay);
             layout.setRippleBackground(rippleBackground);
             layout.setRippleInAdapter(rippleSearchAdapter);
+            layout.setRippleRoundedCorners((int) dpToPx(context.getResources(), rippleRoundedCorner));
 
             ViewGroup.LayoutParams params = child.getLayoutParams();
             ViewGroup parent = (ViewGroup) child.getParent();

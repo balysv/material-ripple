@@ -12,5 +12,6 @@
         <attr name="rippleDelayClick" format="boolean" localization="suggested" />
         <attr name="ripplePersistent" format="boolean" localization="suggested" />
         <attr name="rippleInAdapter" format="boolean" localization="suggested" />
+        <attr name="rippleRoundedCorners" format="dimension" localization="suggested" />
     </declare-styleable>
 </resources>
