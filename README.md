@@ -8,11 +8,11 @@ Ripple effect wrapper for Android Views
 Including in your project
 -------------------------
 
-Add Sonatype Maven repository and import dependencies
-
 ```groovy
 compile 'com.balysv:material-ripple:1.0.0'
 ```
+
+Check for latest version number on the widget below or visit [Releases](https://github.com/balysv/material-ripple/releases)
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.balysv/material-ripple/badge.svg?style=flat)](http://mvnrepository.com/artifact/com.balysv/material-ripple)
 
@@ -47,21 +47,21 @@ Or wrap your `View` with `MaterialRippleLayout` in your layout file:
 If using in an `AdapterView` you must set `rippleInAdapter` to `true`
 
 
-Configure using xml attributes or appropriate setters in code:
+Configure using xml attributes or setters in code:
 
-```xml
+```java
 app:rippleOverlay="true"              // if true, ripple is drawn in foreground; false - background
 app:rippleColor="#ff0000"             // color of ripple
 app:rippleAlpha="0.1"                 // alpha of ripple
 app:rippleDimension="10dp"            // radius of hover and starting ripple
 app:rippleHover="true"                // if true, a hover effect is drawn when view is touched
+app:rippleRoundedCorners="10dp"       // radius of corners of ripples. Note: it uses software rendering pipeline for API 17 and below
 app:rippleInAdapter="true"            // if true, MaterialRippleLayout will optimize for use in AdapterViews
 app:rippleDuration="350"              // duration of ripple animation
 app:rippleFadeDuration="75"           // duration of fade out effect on ripple
 app:rippleDelayClick="true"           // if true, delays calls to OnClickListeners until ripple effect ends
 app:rippleBackground="#FFFFFF"        // background under ripple drawable; used with rippleOverlay="false"
 app:ripplePersistent="true"           // if true, ripple background color persists after animation, until setRadius(0) is called
-app:rippleRoundedCorners="10dp"       // radius of corners of ripples. Note: it uses software rendering pipeline for API 17 and below
 ```
 
 Set an `OnClickListener` to `MaterialRippleLayout`:
@@ -75,12 +75,6 @@ findViewById(R.id.ripple).setOnClickListener(new View.OnClickListener() {
 ```
 
 Or if using in an `AdapterView`, simply use `OnItemClickListener`
-
-Access your child `View` if necessary:
-
-```java
-MyCustomView view = MaterialRippleLayout.getChildView();
-```
 
 Support for Android api versions <  14 
 -----
