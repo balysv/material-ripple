@@ -11,16 +11,10 @@ Including in your project
 Add Sonatype Maven repository and import dependencies
 
 ```groovy
-repositories {
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots/"
-    }
-}
-
-compile 'com.balysv:material-ripple:0.9.5-SNAPSHOT@aar'
+compile 'com.balysv:material-ripple:1.0.0'
 ```
 
-See [https://github.com/balysv/material-ripple/issues](issues) for upcoming features and requests.
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.balysv/material-ripple/badge.svg?style=flat)](http://mvnrepository.com/artifact/com.balysv/material-ripple)
 
 Usage
 -----
@@ -105,7 +99,7 @@ License
 -----------
 
 ```
-Copyright 2014 Balys Valentukevicius
+Copyright 2015 Balys Valentukevicius
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
