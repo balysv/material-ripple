@@ -18,11 +18,11 @@
         android:layout_height="wrap_content"
         android:background="#ffff00"
         android:layout_marginTop="24dp"
-        app:rippleOverlay="true"
-        app:rippleColor="#585858"
-        app:rippleAlpha="0.2"
-        app:rippleDelayClick="false"
-        app:rippleHover="true">
+        app:mrl_rippleOverlay="true"
+        app:mrl_rippleColor="#585858"
+        app:mrl_rippleAlpha="0.2"
+        app:mrl_rippleDelayClick="false"
+        app:mrl_rippleHover="true">
 
         <Button
             android:id="@+id/ripple_layout_1"
