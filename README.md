@@ -9,7 +9,7 @@ Including in your project
 -------------------------
 
 ```groovy
-compile 'com.balysv:material-ripple:1.0.0'
+compile 'com.balysv:material-ripple:1.0.1'
 ```
 
 Check for latest version number on the widget below or visit [Releases](https://github.com/balysv/material-ripple/releases)
@@ -50,18 +50,18 @@ If using in an `AdapterView` you must set `rippleInAdapter` to `true`
 Configure using xml attributes or setters in code:
 
 ```java
-app:rippleOverlay="true"              // if true, ripple is drawn in foreground; false - background
-app:rippleColor="#ff0000"             // color of ripple
-app:rippleAlpha="0.1"                 // alpha of ripple
-app:rippleDimension="10dp"            // radius of hover and starting ripple
-app:rippleHover="true"                // if true, a hover effect is drawn when view is touched
-app:rippleRoundedCorners="10dp"       // radius of corners of ripples. Note: it uses software rendering pipeline for API 17 and below
-app:rippleInAdapter="true"            // if true, MaterialRippleLayout will optimize for use in AdapterViews
-app:rippleDuration="350"              // duration of ripple animation
-app:rippleFadeDuration="75"           // duration of fade out effect on ripple
-app:rippleDelayClick="true"           // if true, delays calls to OnClickListeners until ripple effect ends
-app:rippleBackground="#FFFFFF"        // background under ripple drawable; used with rippleOverlay="false"
-app:ripplePersistent="true"           // if true, ripple background color persists after animation, until setRadius(0) is called
+app:mrl_rippleOverlay="true"              // if true, ripple is drawn in foreground; false - background
+app:mrl_rippleColor="#ff0000"             // color of ripple
+app:mrl_rippleAlpha="0.1"                 // alpha of ripple
+app:mrl_rippleDimension="10dp"            // radius of hover and starting ripple
+app:mrl_rippleHover="true"                // if true, a hover effect is drawn when view is touched
+app:mrl_rippleRoundedCorners="10dp"       // radius of corners of ripples. Note: it uses software rendering pipeline for API 17 and below
+app:mrl_rippleInAdapter="true"            // if true, MaterialRippleLayout will optimize for use in AdapterViews
+app:mrl_rippleDuration="350"              // duration of ripple animation
+app:mrl_rippleFadeDuration="75"           // duration of fade out effect on ripple
+app:mrl_rippleDelayClick="true"           // if true, delays calls to OnClickListeners until ripple effect ends
+app:mrl_rippleBackground="#FFFFFF"        // background under ripple drawable; used with rippleOverlay="false"
+app:mrl_ripplePersistent="true"           // if true, ripple background color persists after animation, until setRadius(0) is called
 ```
 
 Set an `OnClickListener` to `MaterialRippleLayout`:
