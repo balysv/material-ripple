@@ -49,7 +49,7 @@ public class DemoListActivity extends ActionBarActivity implements AdapterView.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_button, menu);
+        getMenuInflater().inflate(R.menu.menu_list, menu);
         return true;
     }
 
@@ -58,6 +58,10 @@ public class DemoListActivity extends ActionBarActivity implements AdapterView.O
         int id = item.getItemId();
         if (id == R.id.switch_button) {
             startActivity(new Intent(this, DemoActivity.class));
+            finish();
+            return true;
+        } else if (id == R.id.switch_recycler) {
+            startActivity(new Intent(this, DemoRecyclerActivity.class));
             finish();
             return true;
         }

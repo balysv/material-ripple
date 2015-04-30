@@ -4,7 +4,12 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/switch_button"
+        android:id="@+id/switch_list"
         app:showAsAction="ifRoom|withText"
-        android:title="@string/switch_button"/>
+        android:title="@string/switch_list"/>
+
+    <item
+        android:id="@+id/switch_recycler"
+        app:showAsAction="ifRoom|withText"
+        android:title="@string/switch_recycler"/>
 </menu>

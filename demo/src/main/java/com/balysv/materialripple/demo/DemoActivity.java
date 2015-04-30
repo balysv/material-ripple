@@ -40,7 +40,7 @@ public class DemoActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override public boolean onLongClick(View v) {
-        if(v.getId()==R.id.ripple_layout_1){
+        if (v.getId() == R.id.ripple_layout_1) {
             Toast.makeText(this, "Long click not consumed", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -50,7 +50,7 @@ public class DemoActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_list, menu);
+        getMenuInflater().inflate(R.menu.menu_button, menu);
         return true;
     }
 
@@ -59,6 +59,10 @@ public class DemoActivity extends ActionBarActivity implements View.OnClickListe
         int id = item.getItemId();
         if (id == R.id.switch_list) {
             startActivity(new Intent(this, DemoListActivity.class));
+            finish();
+            return true;
+        } else if (id == R.id.switch_recycler) {
+            startActivity(new Intent(this, DemoRecyclerActivity.class));
             finish();
             return true;
         }

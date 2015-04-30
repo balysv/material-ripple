@@ -20,6 +20,10 @@
             android:name=".DemoListActivity"
             android:label="@string/app_name">
         </activity>
+        <activity
+            android:name=".DemoRecyclerActivity"
+            android:label="@string/app_name">
+        </activity>
     </application>
 
 </manifest>
