@@ -174,6 +174,14 @@ public class MaterialRippleLayout extends FrameLayout {
     }
 
     @Override
+    public void setOnLongClickListener(OnLongClickListener onClickListener) {
+        if (childView == null) {
+            throw new IllegalStateException("MaterialRippleLayout must have a child view to handle clicks");
+        }
+        childView.setOnLongClickListener(onClickListener);
+    }
+
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
         return !findClickableViewInChild(childView, (int) event.getX(), (int) event.getY());
     }
@@ -192,7 +200,7 @@ public class MaterialRippleLayout extends FrameLayout {
         }
 
         boolean gestureResult = gestureDetector.onTouchEvent(event);
-        if (gestureResult || mHasPerformedLongPress) {
+        if (gestureResult || hasPerformedLongPress) {
             return true;
         } else {
             int action = event.getActionMasked();
@@ -278,11 +286,11 @@ public class MaterialRippleLayout extends FrameLayout {
         }
     }
 
-    private boolean mHasPerformedLongPress;
+    private boolean hasPerformedLongPress;
     private SimpleOnGestureListener longClickListener = new GestureDetector.SimpleOnGestureListener() {
         public void onLongPress(MotionEvent e) {
-            mHasPerformedLongPress = childView.performLongClick();
-            if (mHasPerformedLongPress) {
+            hasPerformedLongPress = childView.performLongClick();
+            if (hasPerformedLongPress) {
                 if (rippleHover) {
                     startRipple(null);
                 }
@@ -292,7 +300,7 @@ public class MaterialRippleLayout extends FrameLayout {
 
         @Override
         public boolean onDown(MotionEvent e) {
-            mHasPerformedLongPress = false;
+            hasPerformedLongPress = false;
             return super.onDown(e);
         }
     };
@@ -627,7 +635,7 @@ public class MaterialRippleLayout extends FrameLayout {
     private class PerformClickEvent implements Runnable {
 
         @Override public void run() {
-            if (mHasPerformedLongPress) return;
+            if (hasPerformedLongPress) return;
 
             // if parent is an AdapterView, try to call its ItemClickListener
             if (getParent() instanceof AdapterView) {
