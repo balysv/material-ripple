@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Material Ripple Demo</string>
-    <string name="switch_list">ListView</string>
-    <string name="switch_button">Buttons</string>
-    <string name="switch_recycler">RecyclerView</string>
-</resources>

@@ -443,11 +443,18 @@ public class MaterialRippleLayout extends FrameLayout {
                 child.getHitRect(rect);
 
                 final boolean contains = rect.contains(x, y);
+                boolean childClickable = false;
                 if (contains) {
-                    return findClickableViewInChild(child, x - rect.left, y - rect.top);
+                    childClickable = findClickableViewInChild(child, x - rect.left, y - rect.top);
+                }
+                if (childClickable)
+                {
+                    return true;
                 }
             }
-        } else if (view != childView) {
+        }
+
+        if (view != childView) {
             return (view.isEnabled() && (view.isClickable() || view.isLongClickable() || view.isFocusableInTouchMode()));
         }
 
