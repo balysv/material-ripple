@@ -639,10 +639,9 @@ public class MaterialRippleLayout extends FrameLayout {
 
             // if parent is an AdapterView, try to call its ItemClickListener
             if (getParent() instanceof AdapterView) {
-                // childView performClick at first
-                if ( !childView.performClick() )
-                    // if childView not handle it
-                    // dispatch to adapterView
+                // try clicking direct child first
+                if (!childView.performClick())
+                    // if it did not handle it dispatch to adapterView
                     clickAdapterView((AdapterView) getParent());
             } else if (rippleInAdapter) {
                 // find adapter view
