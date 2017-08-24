@@ -55,6 +55,7 @@ app:mrl_rippleColor="#ff0000"             // color of ripple
 app:mrl_rippleAlpha="0.1"                 // alpha of ripple
 app:mrl_rippleDimension="10dp"            // radius of hover and starting ripple
 app:mrl_rippleHover="true"                // if true, a hover effect is drawn when view is touched
+app:mrl_rippleHoverDuration="2500"        // duration of hover effect
 app:mrl_rippleRoundedCorners="10dp"       // radius of corners of ripples. Note: it uses software rendering pipeline for API 17 and below
 app:mrl_rippleInAdapter="true"            // if true, MaterialRippleLayout will optimize for use in AdapterViews
 app:mrl_rippleDuration="350"              // duration of ripple animation

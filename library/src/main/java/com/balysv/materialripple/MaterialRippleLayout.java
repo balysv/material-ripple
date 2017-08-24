@@ -60,6 +60,7 @@ public class MaterialRippleLayout extends FrameLayout {
     private static final int     DEFAULT_COLOR           = Color.BLACK;
     private static final int     DEFAULT_BACKGROUND      = Color.TRANSPARENT;
     private static final boolean DEFAULT_HOVER           = true;
+    private static final int     DEFAULT_HOVER_DURATION  = 2500;
     private static final boolean DEFAULT_DELAY_CLICK     = true;
     private static final boolean DEFAULT_PERSISTENT      = false;
     private static final boolean DEFAULT_SEARCH_ADAPTER  = false;
@@ -67,7 +68,6 @@ public class MaterialRippleLayout extends FrameLayout {
     private static final int     DEFAULT_ROUNDED_CORNERS = 0;
 
     private static final int  FADE_EXTRA_DELAY = 50;
-    private static final long HOVER_DURATION   = 2500;
 
     private final Paint paint  = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Rect  bounds = new Rect();
@@ -75,6 +75,7 @@ public class MaterialRippleLayout extends FrameLayout {
     private int      rippleColor;
     private boolean  rippleOverlay;
     private boolean  rippleHover;
+    private int      rippleHoverDuration;
     private int      rippleDiameter;
     private int      rippleDuration;
     private int      rippleAlpha;
@@ -132,6 +133,7 @@ public class MaterialRippleLayout extends FrameLayout {
         );
         rippleOverlay = a.getBoolean(R.styleable.MaterialRippleLayout_mrl_rippleOverlay, DEFAULT_RIPPLE_OVERLAY);
         rippleHover = a.getBoolean(R.styleable.MaterialRippleLayout_mrl_rippleHover, DEFAULT_HOVER);
+        rippleHoverDuration = a.getInt(R.styleable.MaterialRippleLayout_mrl_rippleHoverDuration, DEFAULT_HOVER_DURATION);
         rippleDuration = a.getInt(R.styleable.MaterialRippleLayout_mrl_rippleDuration, DEFAULT_DURATION);
         rippleAlpha = (int) (255 * a.getFloat(R.styleable.MaterialRippleLayout_mrl_rippleAlpha, DEFAULT_ALPHA));
         rippleDelayClick = a.getBoolean(R.styleable.MaterialRippleLayout_mrl_rippleDelayClick, DEFAULT_DELAY_CLICK);
@@ -313,7 +315,7 @@ public class MaterialRippleLayout extends FrameLayout {
         }
         final float radius = (float) (Math.sqrt(Math.pow(getWidth(), 2) + Math.pow(getHeight(), 2)) * 1.2f);
         hoverAnimator = ObjectAnimator.ofFloat(this, radiusProperty, rippleDiameter, radius)
-            .setDuration(HOVER_DURATION);
+            .setDuration(rippleHoverDuration);
         hoverAnimator.setInterpolator(new LinearInterpolator());
         hoverAnimator.start();
     }
@@ -575,6 +577,10 @@ public class MaterialRippleLayout extends FrameLayout {
         this.rippleHover = rippleHover;
     }
 
+    public void setRippleHoverDuration(int rippleHoverDuration) {
+        this.rippleHoverDuration = rippleHoverDuration;
+    }
+
     public void setRippleDelayClick(boolean rippleDelayClick) {
         this.rippleDelayClick = rippleDelayClick;
     }
@@ -699,6 +705,7 @@ public class MaterialRippleLayout extends FrameLayout {
         private int     rippleColor         = DEFAULT_COLOR;
         private boolean rippleOverlay       = DEFAULT_RIPPLE_OVERLAY;
         private boolean rippleHover         = DEFAULT_HOVER;
+        private int     rippleHoverDuration = DEFAULT_HOVER_DURATION;
         private float   rippleDiameter      = DEFAULT_DIAMETER_DP;
         private int     rippleDuration      = DEFAULT_DURATION;
         private float   rippleAlpha         = DEFAULT_ALPHA;
@@ -726,6 +733,11 @@ public class MaterialRippleLayout extends FrameLayout {
 
         public RippleBuilder rippleHover(boolean hover) {
             this.rippleHover = hover;
+            return this;
+        }
+
+        public RippleBuilder rippleHoverDuration(int hoverDuration) {
+            this.rippleHoverDuration = hoverDuration;
             return this;
         }
 
@@ -783,6 +795,7 @@ public class MaterialRippleLayout extends FrameLayout {
             layout.setRippleDuration(rippleDuration);
             layout.setRippleFadeDuration(rippleFadeDuration);
             layout.setRippleHover(rippleHover);
+            layout.setRippleHoverDuration(rippleHoverDuration);
             layout.setRipplePersistent(ripplePersistent);
             layout.setRippleOverlay(rippleOverlay);
             layout.setRippleBackground(rippleBackground);
