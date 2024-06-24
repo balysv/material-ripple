@@ -13,7 +13,7 @@ Including in your project
 -------------------------
 
 ```groovy
-compile 'com.balysv:material-ripple:1.0.2'
+implementation 'com.balysv:material-ripple:1.0.2'
 ```
 
 Check for latest version number on the widget below or visit [Releases](https://github.com/balysv/material-ripple/releases)
